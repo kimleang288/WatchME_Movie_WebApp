@@ -56,3 +56,15 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => __($status)]);
 })->name('password.update');
+
+Route::get('/', function () {
+    return view('home');
+});
+
+Route::get('/movie/{id}', function ($id) {
+    return view('movie-detail');
+})->name('movie.detail');
+
+Route::get('/about', function () {
+    return view('about');
+})->name('about');
