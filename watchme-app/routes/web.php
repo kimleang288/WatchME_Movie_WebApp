@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
 
 Route::get('/login', function () {
@@ -56,10 +56,6 @@ Route::post('/reset-password', function (Request $request) {
         ? redirect()->route('login')->with('status', __($status))
         : back()->withErrors(['email' => __($status)]);
 })->name('password.update');
-
-Route::get('/', function () {
-    return view('home');
-});
 
 Route::get('/movie/{id}', function ($id) {
     return view('movie-detail');
