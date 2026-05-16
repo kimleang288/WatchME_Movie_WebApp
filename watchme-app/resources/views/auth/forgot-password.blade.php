@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>WatchMe – Forgot Password</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@extends('layout.auth')
+@section('title', 'WatchME - Forgot Password')
+@section('content')
+@push('styles')
     @vite('resources/css/auth/forgot-password.css')
-</head>
-<body>
+@endpush
+<main>
 
 {{-- ── Poster wall ── --}}
 <div class="bg-wall" aria-hidden="true">
@@ -50,9 +43,8 @@
     <div class="card">
 
         {{-- Logo --}}
-        <div class="logo">
-            <div class="logo-text">W<span>A</span>TCHME</div>
-        </div>
+        <img src="{{ asset('images/App Logo.png') }}" alt="Logo" class="logo">
+
 
         {{-- Back to login --}}
         <a href="{{ route('login') }}" class="back-link">
@@ -129,5 +121,5 @@
         btn.textContent = 'Sending link…';
     });
 </script>
-</body>
-</html>
+</main>
+@endsection

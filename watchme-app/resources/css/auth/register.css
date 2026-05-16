@@ -85,14 +85,11 @@ html, body {
 }
 
 /* ── Logo ── */
-.logo { text-align: center; margin-bottom: 28px; }
-.logo-text {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.6rem;
-    letter-spacing: .06em;
-    color: #fff;
+.logo {
+    display: block;
+    margin: 0 auto 28px auto;
+    width: 250px;
 }
-.logo-text span { color: var(--red); }
 
 /* ── Headings ── */
 .card-title {
