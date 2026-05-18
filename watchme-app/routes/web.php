@@ -3,9 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Http\Request;
-use App\Http\Controllers\MovieController;   
+use App\Http\Controllers\MovieController;
 
-Route::get('/', [MovieController::class, 'index']
+Route::get(
+    '/',
+    [MovieController::class, 'index']
 )->name('home');
 
 Route::get('/login', function () {
@@ -57,10 +59,12 @@ Route::post('/reset-password', function (Request $request) {
         : back()->withErrors(['email' => __($status)]);
 })->name('password.update');
 
-Route::get('/movie/{id}', function ($id) {
-    return view('movie-detail');
-})->name('movie.detail');
+Route::get('/movie/{id}', [MovieController::class, 'show'])
+    ->name('movie.detail');
 
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::get('/search', [MovieController::class, 'search'])
+    ->name('movies.search');
