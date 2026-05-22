@@ -25,7 +25,7 @@ class MovieController extends Controller
             ->get($this->baseUrl . $endpoint, [
                 'api_key' => $this->apiKey,
             ])
-            ->json()['results'];
+            ->json()['results']?? [];
     }
 
     /**

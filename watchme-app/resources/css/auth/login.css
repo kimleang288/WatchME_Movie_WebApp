@@ -345,40 +345,6 @@ input.is-invalid {
     background: var(--border);
 }
 
-/* ── Social buttons ── */
-.socials {
-    display: flex;
-    gap: 12px;
-}
-
-.btn-social {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 11px;
-    background: var(--input-bg);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    color: var(--text);
-    font-family: 'Outfit', sans-serif;
-    font-size: .88rem;
-    font-weight: 500;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background .2s, border-color .2s;
-}
-
-.btn-social:hover {
-    background: rgba(255, 255, 255, .1);
-    border-color: rgba(255, 255, 255, .2);
-}
-
-.btn-social svg {
-    flex-shrink: 0;
-}
-
 /* ── Footer ── */
 .card-footer {
     text-align: center;

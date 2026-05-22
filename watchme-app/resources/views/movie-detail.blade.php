@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.main')
 @section('title', 'WatchME - Movie Details')
 @section('content')
 @push('styles')

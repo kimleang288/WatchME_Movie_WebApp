@@ -1,4 +1,4 @@
-@extends('layout.main')
+@extends('layouts.main')
 @section('title', 'Search Results - WatchMe')
 @section('content')
 @push('styles')

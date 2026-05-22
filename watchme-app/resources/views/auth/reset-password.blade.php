@@ -1,39 +1,11 @@
-@extends('layout.auth')
+@extends('layouts.auth')
 @section('title', 'WatchME - Reset Password')
 @section('content')
 @push('styles')
-    @vite('resources/css/auth/reset-password.css')
+    @vite(['resources/css/auth/reset-password.css', 'resources/js/auth/reset-password.js'])
 @endpush
 {{-- ── Poster wall ── --}}
-<div class="bg-wall" aria-hidden="true">
-    @php
-        $posters = [
-            'https://image.tmdb.org/t/p/w300/1E5baAaEse26fej7uHcjOgEE2t2.jpg',
-            'https://image.tmdb.org/t/p/w300/qNBAXBIQlnOThrVvA6mA2B5ggV6.jpg',
-            'https://image.tmdb.org/t/p/w300/8Vt6mWEReuy4Of61Lnj5Xj704m8.jpg',
-            'https://image.tmdb.org/t/p/w300/wuMc08IPKEatf9rnMNXvIDxqP4W.jpg',
-            'https://image.tmdb.org/t/p/w300/7WsyChQLEftFiDOVTGkv3hFpyyt.jpg',
-            'https://image.tmdb.org/t/p/w300/kqjL17yufvn9OVLyXYpvtyrFfak.jpg',
-            'https://image.tmdb.org/t/p/w300/5VTN0pR8gcqV3EPUHHfMGnJYxhO.jpg',
-            'https://image.tmdb.org/t/p/w300/d5NXSklXo0qyIYkgV94XAgMIckC.jpg',
-            'https://image.tmdb.org/t/p/w300/bOMnukAAxDNFRXkxnvPgPNQv24g.jpg',
-            'https://image.tmdb.org/t/p/w300/ym1dxyOk4jFcSl4Q2zmRrA5BEEN.jpg',
-            'https://image.tmdb.org/t/p/w300/A3n9LCFZRbHVhHYjhNVVDHfqJl8.jpg',
-            'https://image.tmdb.org/t/p/w300/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg',
-            'https://image.tmdb.org/t/p/w300/iuFNMS8vlodyTOwP0SjhQCLSxNW.jpg',
-            'https://image.tmdb.org/t/p/w300/6CoRTJTmijhBLJTUNoVSUNxZMEI.jpg',
-        ];
-    @endphp
-    @for ($c = 0; $c < 7; $c++)
-        <div class="col">
-            @for ($r = 0; $r < 6; $r++)
-                <div class="poster">
-                    <img src="{{ $posters[($c * 6 + $r) % count($posters)] }}" alt="" loading="lazy">
-                </div>
-            @endfor
-        </div>
-    @endfor
-</div>
+<x-auth-background />
 <div class="bg-vignette" aria-hidden="true"></div>
 
 {{-- ── Page ── --}}
@@ -58,7 +30,7 @@
         @endif
 
         {{-- Form --}}
-        <form method="POST" action="{{ route('password.update') }}" id="resetForm">
+        <form method="POST" action="{{ route('password.store') }}" id="resetForm">
             @csrf
             <input type="hidden" name="token" value="{{ $token }}">
             <input type="hidden" name="email" value="{{ $email ?? old('email') }}">
@@ -176,46 +148,5 @@
 
     </div>
 </div>
-
-<script>
-    // ── Eye toggles ──
-    function makeToggle(btnId, inputId, openId, closedId) {
-        const btn     = document.getElementById(btnId);
-        const input   = document.getElementById(inputId);
-        const eOpen   = document.getElementById(openId);
-        const eClosed = document.getElementById(closedId);
-        btn.addEventListener('click', () => {
-            const isText = input.type === 'text';
-            input.type        = isText ? 'password' : 'text';
-            eOpen.style.display  = isText ? 'block' : 'none';
-            eClosed.style.display= isText ? 'none'  : 'block';
-        });
-    }
-    makeToggle('eyeToggle1', 'password',              'eye1Open', 'eye1Closed');
-    makeToggle('eyeToggle2', 'password_confirmation', 'eye2Open', 'eye2Closed');
-
-    // ── Live requirements checker ──
-    const pwdInput = document.getElementById('password');
-    const rules = [
-        { id: 'req-length',  test: v => v.length >= 8 },
-        { id: 'req-upper',   test: v => /[A-Z]/.test(v) },
-        { id: 'req-lower',   test: v => /[a-z]/.test(v) },
-        { id: 'req-special', test: v => /[0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(v) },
-    ];
-
-    pwdInput.addEventListener('input', () => {
-        const val = pwdInput.value;
-        rules.forEach(({ id, test }) => {
-            document.getElementById(id).classList.toggle('met', test(val));
-        });
-    });
-
-    // ── Loading state ──
-    document.getElementById('resetForm').addEventListener('submit', () => {
-        const btn = document.getElementById('submitBtn');
-        btn.disabled    = true;
-        btn.textContent = 'Resetting…';
-    });
-</script>
 </main>
 @endsection
