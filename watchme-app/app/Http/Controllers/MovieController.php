@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 
@@ -61,6 +62,13 @@ class MovieController extends Controller
                 'append_to_response' => 'credits,similar,videos',
             ])
             ->json();
+        
+        
+        $comments = Comment::where('movie_id', $id)
+            ->where('media_type', 'movie')  
+            ->with('user')    
+            ->latest()
+            ->get();
 
         return view('movie-detail', [
             'movie'   => $movie,
@@ -68,6 +76,7 @@ class MovieController extends Controller
             'similar' => $movie['similar']['results'] ?? [],
             'trailer' => collect($movie['videos']['results'] ?? [])
                 ->firstWhere('type', 'Trailer'),
+            'comments' => $comments,
         ]);
     }
 

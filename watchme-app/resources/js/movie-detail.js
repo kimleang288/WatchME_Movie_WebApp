@@ -13,15 +13,6 @@ document.querySelectorAll('.comment-likes').forEach(btn => {
     });
 });
 
-// Comment post (placeholder)
-document.querySelector('.btn-comment').addEventListener('click', () => {
-    const textarea = document.querySelector('.comment-input');
-    if (textarea.value.trim()) {
-        alert('Comment posted! (Connect to backend to save)');
-        textarea.value = '';
-    }
-});
-
 document.getElementById('playBtn').addEventListener('click', () => {
     document.getElementById('videoPlayer').style.display = 'block';
     document.getElementById('playBtnWrap').style.display = 'none';

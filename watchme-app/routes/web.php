@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\TvController;
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -20,7 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('/login', function () {
     return view('auth.login');
@@ -40,5 +41,13 @@ Route::get('/about', function () {
 Route::get('/search', [MovieController::class, 'search'])
     ->name('movies.search');
 
-Route::get('/tv/{id}',                     [TvController::class, 'show'])->name('tv.show');
-Route::get('/tv/{id}/season/{season}',     [TvController::class, 'season'])->name('tv.season');
+Route::get('/tv/{id}', [TvController::class, 'show'])->name('tv.show');
+Route::get('/tv/{id}/season/{season}', [TvController::class, 'season'])->name('tv.season');
+
+Route::post('/movies/{id}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.store');
+
+Route::post('/tv/{id}/comments', [CommentController::class, 'store'])
+    ->middleware('auth')
+    ->name('comments.tv.store');

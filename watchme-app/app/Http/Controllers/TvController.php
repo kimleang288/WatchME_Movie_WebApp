@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -62,6 +63,12 @@ class TvController extends Controller
             'append_to_response' => 'credits,similar,videos',
         ]);
 
+        $comments = Comment::where('movie_id', $id)
+            ->where('media_type', 'tv')           // ← add this
+            ->with('user')
+            ->latest()
+            ->get();
+
         return view('tv-detail', [
             'show'    => $show,
             'cast'    => collect($show['credits']['cast'] ?? []),
@@ -70,6 +77,7 @@ class TvController extends Controller
                             ->firstWhere('type', 'Trailer'),
             'seasons' => collect($show['seasons'] ?? [])
                             ->filter(fn($s) => $s['season_number'] > 0), // skip "Specials"
+            'comments' => $comments,
         ]);
     }
 

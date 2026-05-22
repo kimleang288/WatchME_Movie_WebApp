@@ -87,46 +87,10 @@
         </section>
 
         <x-movie-row title="You May Also Like" :movies="$similar" />
-
-        {{-- COMMENTS --}}
-        <div class="comments-section">
-            <h2 class="section-title">Comments</h2>
-
-            <div class="comment-input-wrap">
-                <textarea class="comment-input" placeholder="Add a comment..."></textarea>
-                <div class="comment-actions">
-                    <button class="btn-comment">Post</button>
-                </div>
-            </div>
-
-            <div class="comment-list">
-                @php
-                $comments = [
-                ['user' => 'Alex M.', 'initial' => 'A', 'time' => '2 hours ago', 'text' => 'Absolutely loved this movie! The action sequences are incredible and RDJ is at his best here.'],
-                ['user' => 'Sarah K.', 'initial' => 'S', 'time' => '5 hours ago', 'text' => 'The Mandarin twist was unexpected but I thought it was brilliantly done. One of the best MCU films.'],
-                ['user' => 'John D.', 'initial' => 'J', 'time' => '1 day ago', 'text' => 'Great visuals and story. Tony Stark\'s character development in this one is really compelling.'],
-                ];
-                @endphp
-                @foreach($comments as $comment)
-                <div class="comment-item">
-                    <div class="comment-avatar">{{ $comment['initial'] }}</div>
-                    <div class="comment-body">
-                        <div class="comment-header">
-                            <span class="comment-user">{{ $comment['user'] }}</span>
-                            <span class="comment-time">{{ $comment['time'] }}</span>
-                        </div>
-                        <div class="comment-text">{{ $comment['text'] }}</div>
-                        <div class="comment-likes">
-                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z" />
-                                <path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3" />
-                            </svg>
-                            Like
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>
+        @include('comment-section', [
+            'mediaType' => 'movie',
+            'mediaId'   => $movie['id'],
+            'route'     => route('comments.store', $movie['id']),
+        ])
 </main>
 @endsection
