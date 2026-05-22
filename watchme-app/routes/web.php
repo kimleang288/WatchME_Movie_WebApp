@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\TvController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Password;
@@ -39,3 +40,5 @@ Route::get('/about', function () {
 Route::get('/search', [MovieController::class, 'search'])
     ->name('movies.search');
 
+Route::get('/tv/{id}',                     [TvController::class, 'show'])->name('tv.show');
+Route::get('/tv/{id}/season/{season}',     [TvController::class, 'season'])->name('tv.season');

@@ -220,3 +220,21 @@ img {
     cursor: not-allowed;
     pointer-events: none;
 }
+
+.badge-movie {
+    font-size: .65rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(229, 9, 20, .25);
+    color: #ff6b6b;
+}
+
+.badge-tv {
+    font-size: .65rem;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 3px;
+    background: rgba(59, 130, 246, .25);
+    color: #93c5fd;
+}

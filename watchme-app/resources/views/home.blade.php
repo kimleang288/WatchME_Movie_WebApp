@@ -46,6 +46,8 @@
         <x-movie-row title="Popular Movies" :movies="$popularMovies" />
         <x-movie-row title="Top Rated Movies" :movies="$topRatedMovies" />
         <x-movie-row title="Upcoming Movies"  :movies="$upcomingMovies" />
+        <x-movie-row title="Popular on TV" :movies="$popularShows" type="tv" />
+        <x-movie-row title="Top Rated TV Shows" :movies="$topRatedShows" type="tv" />
     </div>
 
 

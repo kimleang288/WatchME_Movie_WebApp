@@ -2,7 +2,7 @@
 @section('title', 'WatchME - Movie Details')
 @section('content')
 @push('styles')
-    @vite('resources/css/movie-detail.css')
+    @vite(['resources/css/movie-detail.css', 'resources/js/movie-detail.js'])
     @vite('resources/js/home.js')
 @endpush
 <main>
@@ -40,6 +40,7 @@
             {{-- Main Info --}}
             <div class="movie-main">
                 <h1>{{ $movie['title'] }} ({{ substr($movie['release_date'], 0, 4) }})</h1>
+
                 @if($trailer)
                 <a href="https://www.youtube.com/watch?v={{ $trailer['key'] }}" target="_blank" class="trailer-btn">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -48,19 +49,19 @@
                     Trailer
                 </a>
                 @endif
-                <p class="movie-desc">{{ $movie['overview'] }}</p>
-                <div class="movie-meta-list">
-                </div>
 
-                {{-- Details Right --}}
-                <div class="movie-details-right">
-                    <div class="movie-meta-item"><strong>Genre:</strong> {{ collect($movie['genres'])->pluck('name')->implode(', ') }}</div>
-                    <div class="movie-meta-item"><strong>Director:</strong> {{ collect($movie['credits']['crew'])->firstWhere('job', 'Director')['name'] ?? 'N/A' }}</div>
-                    <div class="movie-meta-item"><strong>Country:</strong> {{ $movie['production_countries'][0]['name'] ?? 'N/A' }}</div>
-                    <div class="detail-row"><strong>Duration:</strong>     {{ floor($movie['runtime'] / 60) }}h{{ $movie['runtime'] % 60 }}min</div>
-                    <div class="detail-row"><strong>Release:</strong> {{ $movie['release_date'] }}</div>
-                    <div class="detail-row"><strong>Rating:</strong> {{ number_format($movie['vote_average'], 1) }}/10</div>
-                </div>
+                <p class="movie-desc">{{ $movie['overview'] }}</p>
+            </div>
+
+            {{-- Details Right --}}
+            <div class="movie-details-right">
+                <div class="movie-meta-item"><strong>Genre:</strong> {{ collect($movie['genres'])->pluck('name')->implode(', ') }}</div>
+                <div class="movie-meta-item"><strong>Director:</strong> {{ collect($movie['credits']['crew'])->firstWhere('job', 'Director')['name'] ?? 'N/A' }}</div>
+                <div class="movie-meta-item"><strong>Country:</strong> {{ $movie['production_countries'][0]['name'] ?? 'N/A' }}</div>
+                <div class="detail-row"><strong>Duration:</strong>     {{ floor($movie['runtime'] / 60) }}h{{ $movie['runtime'] % 60 }}min</div>
+                <div class="detail-row"><strong>Release:</strong> {{ $movie['release_date'] }}</div>
+                <div class="detail-row"><strong>Rating:</strong> {{ number_format($movie['vote_average'], 1) }}/10</div>
+            </div>
 
             </div>
         </div>
@@ -127,38 +128,5 @@
                 @endforeach
             </div>
         </div>
-
-        <script>
-            // Navbar scroll
-            const navbar = document.querySelector('.navbar');
-            window.addEventListener('scroll', () => {
-                navbar.style.background = window.scrollY > 40 ?
-                    'rgba(9,9,9,0.98)' :
-                    'rgba(9,9,9,0.95)';
-            });
-
-            // Comment like toggle
-            document.querySelectorAll('.comment-likes').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    btn.style.color = btn.style.color === 'rgb(229, 9, 20)' ? '' : 'var(--red)';
-                });
-            });
-
-            // Comment post (placeholder)
-            document.querySelector('.btn-comment').addEventListener('click', () => {
-                const textarea = document.querySelector('.comment-input');
-                if (textarea.value.trim()) {
-                    alert('Comment posted! (Connect to backend to save)');
-                    textarea.value = '';
-                }
-            });
-
-            document.getElementById('playBtn').addEventListener('click', () => {
-                document.getElementById('videoPlayer').style.display = 'block';
-                document.getElementById('playBtnWrap').style.display = 'none';
-                document.querySelector('.hero-video-bg').style.display = 'none';
-                document.querySelector('.hero-video-gradient').style.display = 'none';
-            });
-        </script>
 </main>
 @endsection

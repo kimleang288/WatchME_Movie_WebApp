@@ -25,7 +25,7 @@ class MovieController extends Controller
             ->get($this->baseUrl . $endpoint, [
                 'api_key' => $this->apiKey,
             ])
-            ->json()['results']?? [];
+            ->json()['results'] ?? [];
     }
 
     /**
@@ -44,7 +44,10 @@ class MovieController extends Controller
         $topRatedMovies = $this->fetchMovies('/movie/top_rated');
         $upcomingMovies = $this->fetchMovies('/movie/upcoming');
 
-        return view('home', compact('popularMovies', 'nowPlayingMovies', 'topRatedMovies', 'upcomingMovies', 'genres'));
+        $popularShows     = $this->fetchMovies('/tv/popular');
+        $topRatedShows    = $this->fetchMovies('/tv/top_rated');
+
+        return view('home', compact('popularMovies', 'nowPlayingMovies', 'topRatedMovies', 'upcomingMovies', 'genres', 'popularShows', 'topRatedShows'));
     }
 
     /**
@@ -70,46 +73,47 @@ class MovieController extends Controller
 
 
     /**
-    * Search for movies.
-    */
+     * Search for movies.
+     */
     public function search(Request $request)
     {
-        $query       = $request->query('query');
-        $page        = (int) $request->query('page', 1);
+        $query = $request->query('query');
+        $page  = (int) $request->query('page', 1);
 
-        // Each "display page" = 2 TMDB pages merged
-        $tmdbPage1 = ($page * 2) - 1;  // e.g. display page 1 = TMDB pages 1 & 2
-        $tmdbPage2 = $page * 2;        // e.g. display page 2 = TMDB pages 3 & 4
+        $tmdbPage1 = ($page * 2) - 1;
+        $tmdbPage2 = $page * 2;
 
-        $response1 = Http::withoutVerifying()->timeout(15)
-            ->get($this->baseUrl . '/search/movie', [
-                'api_key' => $this->apiKey,
-                'query'   => $query,
-                'page'    => $tmdbPage1,
-            ])->json();
+        // fetch movies and tv in parallel
+        $movieR1 = Http::withoutVerifying()->timeout(15)
+            ->get($this->baseUrl . '/search/movie', ['api_key' => $this->apiKey, 'query' => $query, 'page' => $tmdbPage1])->json();
+        $movieR2 = Http::withoutVerifying()->timeout(15)
+            ->get($this->baseUrl . '/search/movie', ['api_key' => $this->apiKey, 'query' => $query, 'page' => $tmdbPage2])->json();
 
-        $response2 = Http::withoutVerifying()->timeout(15)
-            ->get($this->baseUrl . '/search/movie', [
-                'api_key' => $this->apiKey,
-                'query'   => $query,
-                'page'    => $tmdbPage2,
-            ])->json();
+        $tvR1 = Http::withoutVerifying()->timeout(15)
+            ->get($this->baseUrl . '/search/tv', ['api_key' => $this->apiKey, 'query' => $query, 'page' => $tmdbPage1])->json();
+        $tvR2 = Http::withoutVerifying()->timeout(15)
+            ->get($this->baseUrl . '/search/tv', ['api_key' => $this->apiKey, 'query' => $query, 'page' => $tmdbPage2])->json();
 
-        // Merge both pages of results
-        $movies = array_merge(
-            $response1['results'] ?? [],
-            $response2['results'] ?? [],
+        $results = array_merge(
+            $movieR1['results'] ?? [],
+            $movieR2['results'] ?? [],
+            $tvR1['results']    ?? [],
+            $tvR2['results']    ?? [],
         );
 
-        // Total display pages = half of TMDB total pages
-        $totalPages = (int) ceil(($response1['total_pages'] ?? 1) / 2);
+        // sort by popularity so best matches float to top
+        usort($results, fn($a, $b) => $b['popularity'] <=> $a['popularity']);
+
+        $totalPages = (int) ceil(max(
+            $movieR1['total_pages'] ?? 1,
+            $tvR1['total_pages']    ?? 1,
+        ) / 2);
 
         return view('search-results', [
-            'movies'      => $movies,
+            'movies'      => $results,
             'query'       => $query,
             'currentPage' => $page,
             'totalPages'  => $totalPages,
         ]);
     }
-
 }
