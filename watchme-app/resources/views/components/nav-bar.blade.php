@@ -4,8 +4,7 @@
     </a>
     <ul class="nav-links">
         <li><a href="{{ route('home') }}" class="active">Home</a></li>
-        <li><a href="#movies">Movies</a></li>
-        <li><a href="#genres">Genres</a></li>
+        <li><a href="{{ route('explore') }}">Explore</a></li>
         <li><a href="{{ route('about') }}">About Us</a></li>
     </ul>
     <div class="nav-right">

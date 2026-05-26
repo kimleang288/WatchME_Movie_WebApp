@@ -49,29 +49,5 @@
         <x-movie-row title="Popular on TV" :movies="$popularShows" type="tv" />
         <x-movie-row title="Top Rated TV Shows" :movies="$topRatedShows" type="tv" />
     </div>
-
-
-    {{-- BROWSE BY GENRE --}}
-    <section class="section" id="genres">
-        <div class="section-header">
-            <h2 class="section-title">Browse by Genre</h2>
-        </div>
-        <div class="genre-grid">
-            @php
-            $genres = [
-            ['name' => 'Anime', 'img' => asset('images/One Piece.png')],
-            ['name' => 'Drama', 'img' => asset('images/Your Lie in April.png')],
-            ['name' => 'Comedy', 'img' => asset('images/Spy X Family.png')],
-            ['name' => 'Thriller','img' => asset('images/Attack on Titan.png')],
-            ];
-            @endphp
-            @foreach($genres as $genre)
-            <div class="genre-card">
-                <img src="{{ $genre['img'] }}" alt="{{ $genre['name'] }}" loading="lazy">
-                <div class="genre-label">{{ $genre['name'] }}</div>
-            </div>
-            @endforeach
-        </div>
-    </section>
 </main>
 @endsection

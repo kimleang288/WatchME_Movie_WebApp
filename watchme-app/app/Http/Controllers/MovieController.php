@@ -62,11 +62,11 @@ class MovieController extends Controller
                 'append_to_response' => 'credits,similar,videos',
             ])
             ->json();
-        
-        
+
+
         $comments = Comment::where('movie_id', $id)
-            ->where('media_type', 'movie')  
-            ->with('user')    
+            ->where('media_type', 'movie')
+            ->with('user')
             ->latest()
             ->get();
 
@@ -123,6 +123,69 @@ class MovieController extends Controller
             'query'       => $query,
             'currentPage' => $page,
             'totalPages'  => $totalPages,
+            'genres'        => [],
+            'selectedGenre' => null,
+            'selectedSort'  => null,
+            'route'         => 'movies.search',
+            'routeParams'   => ['query' => $query],
+        ]);
+    }
+
+    public function explore(Request $request)
+    {
+        $genre = $request->query('genre');
+        $sort  = $request->query('sort', 'popularity.desc');
+        $page  = (int) $request->query('page', 1);
+
+        $tmdbPage1 = ($page * 2) - 1;
+        $tmdbPage2 = $page * 2;
+
+        // genres...
+        $genres = Http::withoutVerifying()->timeout(15)->get($this->baseUrl . '/genre/movie/list', ['api_key' => $this->apiKey])->json()['genres'] ?? [];
+
+        $params1 = array_filter([
+            'api_key'     => $this->apiKey,
+            'sort_by'     => $sort,
+            'with_genres' => $genre,
+            'page'        => $tmdbPage1,
+        ]);
+
+        $params2 = array_filter([
+            'api_key'     => $this->apiKey,
+            'sort_by'     => $sort,
+            'with_genres' => $genre,
+            'page'        => $tmdbPage2,
+        ]);
+
+        $movieR1 = Http::withoutVerifying()->timeout(15)->get($this->baseUrl . '/discover/movie', $params1)->json();
+        $movieR2 = Http::withoutVerifying()->timeout(15)->get($this->baseUrl . '/discover/movie', $params2)->json();
+        $tvR1    = Http::withoutVerifying()->timeout(15)->get($this->baseUrl . '/discover/tv', $params1)->json();
+        $tvR2    = Http::withoutVerifying()->timeout(15)->get($this->baseUrl . '/discover/tv', $params2)->json();
+
+        $results = array_merge(
+            $movieR1['results'] ?? [],
+            $movieR2['results'] ?? [],
+            $tvR1['results']    ?? [],
+            $tvR2['results']    ?? [],
+        );
+
+        usort($results, fn($a, $b) => $b['popularity'] <=> $a['popularity']);
+
+        $totalPages = (int) min(
+            max($movieR1['total_pages'] ?? 1, $tvR1['total_pages'] ?? 1) / 2,
+            500
+        );
+
+        return view('search-results', [
+            'movies'        => $results,
+            'currentPage'   => $page,
+            'totalPages'    => $totalPages,
+            'query'         => null,
+            'genres'        => $genres,
+            'selectedGenre' => $genre,
+            'selectedSort'  => $sort,
+            'route'         => 'explore',
+            'routeParams'   => ['genre' => $genre, 'sort' => $sort],
         ]);
     }
 }

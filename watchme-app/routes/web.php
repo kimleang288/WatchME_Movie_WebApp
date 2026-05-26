@@ -41,6 +41,8 @@ Route::get('/about', function () {
 Route::get('/search', [MovieController::class, 'search'])
     ->name('movies.search');
 
+Route::get('/explore', [MovieController::class, 'explore'])->name('explore');
+
 Route::get('/tv/{id}', [TvController::class, 'show'])->name('tv.show');
 Route::get('/tv/{id}/season/{season}', [TvController::class, 'season'])->name('tv.season');
 
