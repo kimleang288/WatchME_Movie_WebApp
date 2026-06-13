@@ -245,13 +245,3 @@ This project is open-source and built only for educational purpose.
 ## 📝 Note
 
 Due to security reason, no API Key is provided. 
-
-
----
-## 📄 License
-
-This project is open-source and built only for educational purpose.
-
-## 📝 Note
-
-Due to security reason, no API Key is provided. 
