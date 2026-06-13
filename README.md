@@ -231,8 +231,6 @@ routes/
 
 ## 📷 Our app UI
 
-## 📷 Our app UI
-
 | | | |
 |---|---|---|
 | <img width="400" alt="Main Screen" src="https://github.com/user-attachments/assets/e87cd347-2dab-4915-9f6b-027163e68a29" /> | <img width="400" alt="Main Screen (1)" src="https://github.com/user-attachments/assets/d945fe09-9af1-4f15-bd69-28d4083ef623" /> | <img width="400" alt="Detail Screen" src="https://github.com/user-attachments/assets/479573ff-99a4-4a4a-b8c1-49b6977ba37a" /> |
