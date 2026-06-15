@@ -46,19 +46,9 @@
             <div class="footer-col">
                 <h4>Quick Links</h4>
                 <ul>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Pricing</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4>Categories</h4>
-                <ul>
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Drama</a></li>
-                    <li><a href="#">Comedy</a></li>
-                    <li><a href="#">Thriller</a></li>
+                    <li><a href="{{ route('home') }}">Home</a></li>
+                    <li><a href="{{ route('about') }}">About Us</a></li>
+                    <li><a href="{{ route('explore') }}">Explore</a></li>
                 </ul>
             </div>
             <div class="footer-col">

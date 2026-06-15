@@ -191,3 +191,50 @@ img {
         padding: 50px 24px 32px;
     }
 }
+
+/* ============================================
+   MOBILE RESPONSIVE — ABOUT
+   ============================================ */
+@media (max-width: 768px) {
+    .hero {
+        padding: 80px 16px 60px;
+        min-height: unset;
+    }
+
+    .hero-img {
+        width: clamp(180px, 65vw, 280px);
+        margin: -10px 0 -40px;
+    }
+
+    .hero-greeting {
+        font-size: clamp(3rem, 14vw, 5rem);
+    }
+
+    .about-card {
+        padding: 50px 20px 28px;
+        margin: 0 4px;
+    }
+
+    .about-card h2 {
+        font-size: 1.6rem;
+    }
+
+    .about-card p {
+        font-size: .88rem;
+    }
+
+    /* Poster wall: fewer columns on mobile */
+    .bg-wall {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-greeting {
+        font-size: clamp(2.6rem, 16vw, 4rem);
+    }
+
+    .bg-wall {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

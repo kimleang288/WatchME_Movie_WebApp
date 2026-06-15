@@ -730,10 +730,6 @@ a.movie-card {
         padding: 0 20px;
     }
 
-    .nav-links {
-        display: none;
-    }
-
     .movie-info-section {
         padding: 0 20px 32px;
     }
@@ -757,5 +753,123 @@ a.movie-card {
 
     .comments-section {
         padding: 24px 20px 40px;
+    }
+}
+
+/* MOBILE RESPONSIVE — MOVIE DETAIL */
+@media (max-width: 768px) {
+    .hero-video {
+        height: 240px;
+        margin-top: 64px;
+    }
+
+    .play-btn {
+        width: 54px;
+        height: 54px;
+    }
+
+    .movie-info-section {
+        padding: 0 16px 28px;
+    }
+
+    /* Stack poster + info vertically */
+    .movie-info-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding-top: 20px;
+    }
+
+    /* Side-by-side poster + title on mobile */
+    .movie-poster-row {
+        display: flex;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .movie-poster {
+        width: 90px;
+        height: 130px;
+        flex-shrink: 0;
+    }
+
+    .movie-main h1 {
+        font-size: 1.15rem;
+    }
+
+    .movie-desc {
+        font-size: .83rem;
+        max-width: 100%;
+    }
+
+    .movie-details-right {
+        padding-top: 0;
+    }
+
+    .section {
+        padding: 20px 16px;
+    }
+
+    .section-title {
+        font-size: 1rem;
+    }
+
+    /* Cast scroll */
+    .cast-grid {
+        gap: 10px;
+    }
+
+    .cast-card {
+        flex: 0 0 80px;
+    }
+
+    .cast-avatar {
+        width: 64px;
+        height: 64px;
+    }
+
+    /* Related movies */
+    .movie-card {
+        width: 120px;
+        min-width: 120px;
+    }
+
+    /* Comments */
+    .comments-section {
+        padding: 20px 16px 36px;
+    }
+
+    .comment-input-wrap {
+        padding: 12px 14px;
+    }
+
+    /* Episodes */
+    .episode-thumb {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .season-header {
+        font-size: .88rem;
+        padding: 14px 16px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-video {
+        height: 200px;
+    }
+
+    .movie-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .episode-card {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .episode-thumb {
+        width: 100%;
+        min-width: unset;
     }
 }

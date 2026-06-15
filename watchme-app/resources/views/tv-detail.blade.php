@@ -158,7 +158,7 @@
                 <div class="cast-avatar">
                     <img src="{{ $actor['profile_path']
                         ? 'https://image.tmdb.org/t/p/w185' . $actor['profile_path']
-                        : asset('images/no-avatar.png') }}"
+                        : asset('images/no-avatar.jpg') }}"
                         alt="{{ $actor['name'] }}" loading="lazy">
                 </div>
                 <div class="cast-name">{{ $actor['name'] }}</div>

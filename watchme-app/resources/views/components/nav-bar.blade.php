@@ -1,11 +1,20 @@
 <nav class="navbar">
+
+    @php
+        $isActive = fn($route) => request()->routeIs($route) ? 'active' : '';
+    @endphp
     <a href="/">
         <img src="{{ asset('images/App Logo.png') }}" alt="Logo" class="nav-logo">
     </a>
+
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+
     <ul class="nav-links">
-        <li><a href="{{ route('home') }}" class="active">Home</a></li>
-        <li><a href="{{ route('explore') }}">Explore</a></li>
-        <li><a href="{{ route('about') }}">About Us</a></li>
+        <li><a href="{{ route('home') }}" class="{{ $isActive('home') }}">Home</a></li>
+        <li><a href="{{ route('explore') }}" class="{{ $isActive('explore') }}">Explore</a></li>
+        <li><a href="{{ route('about') }}" class="{{ $isActive('about') }}">About Us</a></li>
     </ul>
     <div class="nav-right">
 

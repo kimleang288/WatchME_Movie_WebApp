@@ -344,3 +344,103 @@ footer {
         gap: 28px;
     }
 }
+
+/* 
+   MOBILE RESPONSIVE — NAVBAR */
+
+/* Hamburger button */
+.nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    margin-left: auto;
+    z-index: 200;
+}
+
+.nav-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform .3s, opacity .3s;
+}
+
+/* Animated X when open */
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile drawer */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 20px;
+        gap: 12px;
+    }
+
+    .nav-hamburger {
+        display: flex;
+    }
+
+    .nav-hamburger.open {
+        position: fixed;
+        z-index: 200;
+    }
+    /* Full-screen mobile menu */
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 32px;
+
+        position: fixed;
+        inset: 0;
+        background: rgba(9, 9, 9, .97);
+        backdrop-filter: blur(16px);
+        z-index: 150;
+
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-12px);
+        transition: opacity .3s, transform .3s;
+    }
+
+    .nav-links.open {
+        opacity: 1;
+        pointer-events: all;
+        transform: translateY(0);
+    }
+
+    .nav-links a {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--muted);
+    }
+
+    .nav-links a.active,
+    .nav-links a:hover {
+        color: var(--text);
+    }
+}
+
+@media (max-width: 768px) {
+    footer {
+        padding: 40px 20px 24px;
+    }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+    }
+
+    .footer-bottom {
+        font-size: .72rem;
+        text-align: center;
+    }
+}

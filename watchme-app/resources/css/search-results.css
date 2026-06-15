@@ -303,3 +303,61 @@ img {
 .filter-bar button[type="submit"]:active {
     transform: scale(0.97);
 }
+
+@media (max-width: 768px) {
+    .section {
+        margin-top: 64px;
+        padding: 24px 16px;
+    }
+
+    /* 3 columns on tablet */
+    .movies-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .section-title {
+        font-size: 1.05rem;
+    }
+
+    /* Filter bar: wrap and stack */
+    .filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        padding: 12px 14px;
+    }
+
+    .filter-bar select {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .filter-bar button[type="submit"] {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Pagination: smaller buttons */
+    .pagination {
+        gap: 6px;
+        padding: 24px 0 36px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-btn {
+        width: 36px;
+        height: 36px;
+        font-size: .82rem;
+        border-radius: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* 2 columns on small phones */
+    .movies-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+    }
+}
